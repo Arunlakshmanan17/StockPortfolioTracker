@@ -1,0 +1,1010 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>InvestTrack Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/style.css' %}">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+
+<body class="dashboard-page">
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="dashboard-navbar">
+
+    <div class="dashboard-brand">
+
+        📈
+
+        <span>
+            InvestTrack
+        </span>
+
+    </div>
+
+
+    <div class="dashboard-nav-right">
+
+        <a href="{% url 'dashboard' %}">
+            Dashboard
+        </a>
+
+        <a href="{% url 'logout' %}"
+           class="logout-button">
+
+            Logout
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="dashboard-container">
+
+
+    <!-- ================= WELCOME ================= -->
+
+    <div class="dashboard-welcome">
+
+        <h1>
+            Welcome, {{ request.user.username }} 👋
+        </h1>
+
+        <p>
+            Here's your investment portfolio overview.
+        </p>
+
+    </div>
+
+
+
+    <!-- ================= SUMMARY CARDS ================= -->
+
+    <div class="dashboard-cards">
+
+
+        <!-- PORTFOLIO VALUE -->
+
+        <div class="dashboard-card">
+
+            <h3>
+                Portfolio Value
+            </h3>
+
+            <div class="dashboard-value">
+
+                ₹{{ portfolio_value|floatformat:2 }}
+
+            </div>
+
+        </div>
+
+
+
+        <!-- TOTAL INVESTMENT -->
+
+        <div class="dashboard-card">
+
+            <h3>
+                Total Investment
+            </h3>
+
+            <div class="dashboard-value">
+
+                ₹{{ total_investment|floatformat:2 }}
+
+            </div>
+
+        </div>
+
+
+
+        <!-- PROFIT / LOSS -->
+
+        <div class="dashboard-card">
+
+            <h3>
+                Profit / Loss
+            </h3>
+
+            <div
+                class="dashboard-value
+                {% if profit_loss >= 0 %}
+                    profit-positive
+                {% else %}
+                    profit-negative
+                {% endif %}"
+            >
+
+                {% if profit_loss >= 0 %}
+
+                    +₹{{ profit_loss|floatformat:2 }}
+
+                {% else %}
+
+                    ₹{{ profit_loss|floatformat:2 }}
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STOCK COUNT -->
+
+        <div class="dashboard-card">
+
+            <h3>
+                Stocks
+            </h3>
+
+            <div class="dashboard-value stock-count">
+
+                {{ stock_count }}
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- PORTFOLIO ANALYTICS -->
+    <!-- ================================================= -->
+
+    <section class="dashboard-section">
+
+
+        <div class="section-header">
+
+            <div>
+
+                <h2>
+                    📊 Portfolio Analytics
+                </h2>
+
+                <p>
+                    Visual analysis of your investment portfolio.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        {% if stocks %}
+
+
+            <p class="portfolio-summary">
+
+                Your portfolio contains
+
+                <strong>
+                    {{ stock_count }}
+                </strong>
+
+                stock{{ stock_count|pluralize }}.
+
+            </p>
+
+
+
+            <!-- ================= ANALYTICS GRID ================= -->
+
+            <div class="analytics-grid">
+
+
+                <!-- ========================================= -->
+                <!-- PORTFOLIO ALLOCATION -->
+                <!-- ========================================= -->
+
+                <div class="analytics-card">
+
+                    <div class="analytics-card-header">
+
+                        <h3>
+                            🍩 Portfolio Allocation
+                        </h3>
+
+                        <p>
+                            Current value distribution
+                        </p>
+
+                    </div>
+
+
+                    <div class="chart-wrapper">
+
+                        <canvas
+                            id="allocationChart">
+                        </canvas>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ========================================= -->
+                <!-- PROFIT / LOSS -->
+                <!-- ========================================= -->
+
+                <div class="analytics-card">
+
+                    <div class="analytics-card-header">
+
+                        <h3>
+                            📊 Profit / Loss
+                        </h3>
+
+                        <p>
+                            Performance by stock
+                        </p>
+
+                    </div>
+
+
+                    <div class="chart-wrapper">
+
+                        <canvas
+                            id="profitLossChart">
+                        </canvas>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+        {% else %}
+
+
+            <div class="empty-portfolio">
+
+                <div class="empty-icon">
+                    📊
+                </div>
+
+                <h3>
+                    Your portfolio is empty
+                </h3>
+
+                <p>
+                    Add your first stock to start monitoring
+                    investment performance.
+                </p>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+
+    <!-- ================================================= -->
+    <!-- STOCK PORTFOLIO -->
+    <!-- ================================================= -->
+
+    <section class="dashboard-section">
+
+
+        <!-- ================= SECTION HEADER ================= -->
+
+        <div class="section-header">
+
+
+            <div>
+
+                <h2>
+                    📈 My Stocks
+                </h2>
+
+                <p>
+                    Stocks currently present in your portfolio.
+                </p>
+
+            </div>
+
+
+
+            <!-- ================= ACTION BUTTONS ================= -->
+
+            <div class="dashboard-actions">
+
+
+                <!-- REFRESH PRICES -->
+
+                <a
+                    href="{% url 'refresh_prices' %}"
+                    class="refresh-button">
+
+                    🔄 Refresh Prices
+
+                </a>
+
+
+
+                <!-- ADD STOCK -->
+
+                <a
+                    href="{% url 'add_stock' %}"
+                    class="primary-action">
+
+                    + Add Stock
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ================= STOCKS EXIST ================= -->
+
+        {% if stocks %}
+
+
+            <div class="stock-table-container">
+
+                <table class="stock-table">
+
+
+                    <!-- ================= TABLE HEADER ================= -->
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Symbol
+                            </th>
+
+                            <th>
+                                Company
+                            </th>
+
+                            <th>
+                                Quantity
+                            </th>
+
+                            <th>
+                                Purchase Price
+                            </th>
+
+                            <th>
+                                Current Price
+                            </th>
+
+                            <th>
+                                Investment
+                            </th>
+
+                            <th>
+                                Current Value
+                            </th>
+
+                            <th>
+                                Profit / Loss
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+
+                    <!-- ================= TABLE BODY ================= -->
+
+                    <tbody>
+
+
+                        {% for stock in stocks %}
+
+
+                            <tr>
+
+
+                                <!-- SYMBOL -->
+
+                                <td>
+
+                                    <strong>
+                                        {{ stock.symbol }}
+                                    </strong>
+
+                                </td>
+
+
+
+                                <!-- COMPANY -->
+
+                                <td>
+
+                                    {{ stock.company_name }}
+
+                                </td>
+
+
+
+                                <!-- QUANTITY -->
+
+                                <td>
+
+                                    {{ stock.quantity }}
+
+                                </td>
+
+
+
+                                <!-- PURCHASE PRICE -->
+
+                                <td>
+
+                                    ₹{{ stock.purchase_price|floatformat:2 }}
+
+                                </td>
+
+
+
+                                <!-- CURRENT PRICE -->
+
+                                <td>
+
+                                    ₹{{ stock.current_price|floatformat:2 }}
+
+                                </td>
+
+
+
+                                <!-- INVESTMENT -->
+
+                                <td>
+
+                                    ₹{{ stock.investment_value|floatformat:2 }}
+
+                                </td>
+
+
+
+                                <!-- CURRENT VALUE -->
+
+                                <td>
+
+                                    ₹{{ stock.current_value|floatformat:2 }}
+
+                                </td>
+
+
+
+                                <!-- PROFIT / LOSS -->
+
+                                <td>
+
+
+                                    {% if stock.profit_loss >= 0 %}
+
+                                        <span class="profit-positive">
+
+                                            +₹{{ stock.profit_loss|floatformat:2 }}
+
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="profit-negative">
+
+                                            ₹{{ stock.profit_loss|floatformat:2 }}
+
+                                        </span>
+
+                                    {% endif %}
+
+
+                                </td>
+
+
+
+                                <!-- ACTIONS -->
+
+                                <td class="stock-actions">
+
+
+                                    <!-- EDIT -->
+
+                                    <a
+                                        href="{% url 'edit_stock' stock.id %}"
+                                        class="edit-button">
+
+                                        ✏️ Edit
+
+                                    </a>
+
+
+
+                                    <!-- DELETE -->
+
+                                    <a
+                                        href="{% url 'delete_stock' stock.id %}"
+                                        class="delete-button">
+
+                                        🗑️ Delete
+
+                                    </a>
+
+
+                                </td>
+
+
+                            </tr>
+
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- ================= EMPTY PORTFOLIO ================= -->
+
+            <div class="empty-portfolio">
+
+
+                <div class="empty-icon">
+                    🚀
+                </div>
+
+
+                <h3>
+                    Add your first stock
+                </h3>
+
+
+                <p>
+                    Start building your investment portfolio
+                    by adding stocks.
+                </p>
+
+
+
+                <a
+                    href="{% url 'add_stock' %}"
+                    class="primary-action">
+
+                    + Add Your First Stock
+
+                </a>
+
+
+            </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- ===================================================== -->
+<!-- CHART DATA -->
+<!-- ===================================================== -->
+
+{{ chart_data|json_script:"stocks-data" }}
+
+
+<script>
+
+    const stocks =
+        JSON.parse(
+            document.getElementById(
+                "stocks-data"
+            ).textContent
+        );
+
+
+    /*
+    ========================================================
+    PREPARE DATA
+    ========================================================
+    */
+
+    const stockNames = [];
+
+    const currentValues = [];
+
+    const profitLossValues = [];
+
+
+    stocks.forEach(function(stock) {
+
+    stockNames.push(
+        stock.symbol
+    );
+
+    currentValues.push(
+        stock.current_value
+    );
+
+});
+
+
+    /*
+    ========================================================
+    PORTFOLIO ALLOCATION DONUT CHART
+    ========================================================
+    */
+
+    const allocationCanvas =
+        document.getElementById(
+            "allocationChart"
+        );
+
+
+    if (allocationCanvas) {
+
+        new Chart(
+            allocationCanvas,
+            {
+
+                type: "doughnut",
+
+                data: {
+
+                    labels: stockNames,
+
+                    datasets: [
+
+                        {
+
+                            data: currentValues,
+
+                            borderWidth: 2
+
+                        }
+
+                    ]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+
+                            position: "bottom"
+
+                        },
+
+                        tooltip: {
+
+                            callbacks: {
+
+                                label: function(context) {
+
+                                    const value =
+                                        context.raw;
+
+                                    return (
+                                        context.label +
+                                        ": ₹" +
+                                        value.toLocaleString(
+                                            "en-IN",
+                                            {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            }
+                                        )
+                                    );
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        );
+
+    }
+
+
+
+    /*
+    ========================================================
+    PROFIT / LOSS BAR CHART
+    ========================================================
+    */
+
+    stocks.forEach(function(stock) {
+
+        profitLossValues.push(
+            stock.profit_loss
+        );
+
+    });
+
+
+    const profitLossCanvas =
+        document.getElementById(
+            "profitLossChart"
+        );
+
+
+    if (profitLossCanvas) {
+
+        new Chart(
+            profitLossCanvas,
+            {
+
+                type: "bar",
+
+                data: {
+
+                    labels: stockNames,
+
+                    datasets: [
+
+                        {
+
+                            label:
+                                "Profit / Loss",
+
+                            data:
+                                profitLossValues,
+
+                            borderWidth: 1
+
+                        }
+
+                    ]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    plugins: {
+
+                        legend: {
+
+                            display: false
+
+                        },
+
+                        tooltip: {
+
+                            callbacks: {
+
+                                label: function(context) {
+
+                                    const value =
+                                        context.raw;
+
+                                    const sign =
+                                        value >= 0
+                                        ? "+"
+                                        : "";
+
+                                    return (
+                                        sign +
+                                        "₹" +
+                                        value.toLocaleString(
+                                            "en-IN",
+                                            {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2
+                                            }
+                                        )
+                                    );
+
+                                }
+
+                            }
+
+                        }
+
+                    },
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero: true,
+
+                            ticks: {
+
+                                callback: function(value) {
+
+                                    return "₹" +
+                                        value.toLocaleString(
+                                            "en-IN"
+                                        );
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        );
+
+    }
+
+</script>
+
+
+
+<!-- ===================================================== -->
+<!-- CHART STYLES -->
+<!-- ===================================================== -->
+
+<style>
+
+    /* =========================
+       ANALYTICS GRID
+    ========================= */
+
+    .analytics-grid {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 25px;
+
+        margin-top: 25px;
+
+    }
+
+
+    /* =========================
+       ANALYTICS CARD
+    ========================= */
+
+    .analytics-card {
+
+        background: #ffffff;
+
+        border-radius: 16px;
+
+        padding: 25px;
+
+        box-shadow:
+            0 5px 20px
+            rgba(0, 0, 0, 0.08);
+
+    }
+
+
+    .analytics-card-header {
+
+        margin-bottom: 15px;
+
+    }
+
+
+    .analytics-card-header h3 {
+
+        margin: 0;
+
+        font-size: 20px;
+
+    }
+
+
+    .analytics-card-header p {
+
+        margin-top: 6px;
+
+        color: #64748b;
+
+        font-size: 14px;
+
+    }
+
+
+    /* =========================
+       CHART
+    ========================= */
+
+    .chart-wrapper {
+
+        position: relative;
+
+        width: 100%;
+
+        height: 320px;
+
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 900px) {
+
+        .analytics-grid {
+
+            grid-template-columns: 1fr;
+
+        }
+
+    }
+
+</style>
+
+
+</body>
+
+</html>

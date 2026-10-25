@@ -1,0 +1,399 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Stock | InvestTrack</title>
+
+    <link rel="stylesheet"
+          href="{% static 'css/style.css' %}">
+
+</head>
+
+
+<body class="add-stock-page">
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="dashboard-navbar">
+
+    <div class="dashboard-brand">
+
+        📈
+
+        <span>
+            InvestTrack
+        </span>
+
+    </div>
+
+
+    <div class="dashboard-nav-right">
+
+        <a href="{% url 'dashboard' %}">
+            Dashboard
+        </a>
+
+
+        <a href="{% url 'logout' %}"
+           class="logout-button">
+
+            Logout
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="add-stock-container">
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="add-stock-header">
+
+        <span class="add-stock-icon">
+            🚀
+        </span>
+
+        <div>
+
+            <h1>
+                Add Stock
+            </h1>
+
+            <p>
+                Add an investment to your portfolio
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= FORM CARD ================= -->
+
+    <div class="add-stock-card">
+
+
+        <!-- ================= DJANGO MESSAGES ================= -->
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="form-message">
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+
+
+        <!-- ================= FORM ================= -->
+
+        <form method="POST"
+              action="{% url 'add_stock' %}">
+
+            {% csrf_token %}
+
+
+
+            <!-- ================= STOCK SYMBOL ================= -->
+
+            <div class="form-group">
+
+                <label for="symbol">
+                    Stock Symbol
+                </label>
+
+
+                <input
+                    type="text"
+                    id="symbol"
+                    name="symbol"
+                    placeholder="Example: TCS"
+                    maxlength="20"
+                    required
+                >
+
+
+                <small>
+                    Enter the NSE stock symbol.
+                    Example: TCS, INFY, RELIANCE.
+                </small>
+
+            </div>
+
+
+
+            <!-- ================= COMPANY NAME ================= -->
+
+            <div class="form-group">
+
+                <label for="company_name">
+                    Company Name
+                </label>
+
+
+                <input
+                    type="text"
+                    id="company_name"
+                    name="company_name"
+                    placeholder="Example: Tata Consultancy Services"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- ================= QUANTITY ================= -->
+
+            <div class="form-group">
+
+                <label for="quantity">
+                    Quantity
+                </label>
+
+
+                <input
+                    type="number"
+                    id="quantity"
+                    name="quantity"
+                    placeholder="10"
+                    min="1"
+                    step="1"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- ================= PURCHASE PRICE ================= -->
+
+            <div class="form-group">
+
+                <label for="purchase_price">
+                    Purchase Price
+                </label>
+
+
+                <input
+                    type="number"
+                    id="purchase_price"
+                    name="purchase_price"
+                    placeholder="3500"
+                    min="0.01"
+                    step="0.01"
+                    required
+                >
+
+
+                <small>
+                    Price you paid for one share.
+                </small>
+
+            </div>
+
+
+
+            <!-- ================= LIVE PRICE INFORMATION ================= -->
+
+            <div class="live-price-info">
+
+                <div class="live-price-icon">
+                    📈
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Current Price
+                    </strong>
+
+                    <p>
+                        The latest available market price
+                        will be fetched automatically
+                        when you add the stock.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ================= INVESTMENT PREVIEW ================= -->
+
+            <div class="investment-preview">
+
+
+                <!-- INVESTMENT -->
+
+                <div>
+
+                    <span>
+                        Estimated Investment
+                    </span>
+
+
+                    <strong id="investmentPreview">
+                        ₹0.00
+                    </strong>
+
+                </div>
+
+
+                <!-- CURRENT VALUE -->
+
+                <div>
+
+                    <span>
+                        Current Value
+                    </span>
+
+
+                    <strong>
+                        Calculated after live price
+                    </strong>
+
+                </div>
+
+
+                <!-- PROFIT / LOSS -->
+
+                <div>
+
+                    <span>
+                        Profit / Loss
+                    </span>
+
+
+                    <strong>
+                        Calculated after live price
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ================= BUTTONS ================= -->
+
+            <div class="form-actions">
+
+
+                <a
+                    href="{% url 'dashboard' %}"
+                    class="cancel-button">
+
+                    Cancel
+
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="add-stock-button">
+
+                    + Add Stock
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+    const quantity =
+        document.getElementById("quantity");
+
+    const purchasePrice =
+        document.getElementById("purchase_price");
+
+    const investmentPreview =
+        document.getElementById("investmentPreview");
+
+
+    function updatePreview() {
+
+        const qty =
+            Number(quantity.value) || 0;
+
+        const purchase =
+            Number(purchasePrice.value) || 0;
+
+
+        const investment =
+            qty * purchase;
+
+
+        investmentPreview.textContent =
+            "₹" + investment.toLocaleString(
+                "en-IN",
+                {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }
+            );
+
+    }
+
+
+    quantity.addEventListener(
+        "input",
+        updatePreview
+    );
+
+
+    purchasePrice.addEventListener(
+        "input",
+        updatePreview
+    );
+
+
+    // Run once when page loads
+
+    updatePreview();
+
+</script>
+
+
+</body>
+
+</html>

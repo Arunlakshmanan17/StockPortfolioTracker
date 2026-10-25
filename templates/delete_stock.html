@@ -1,0 +1,126 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Delete Stock | InvestTrack</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/style.css' %}"
+    >
+
+</head>
+
+
+<body class="add-stock-page">
+
+
+    <!-- NAVBAR -->
+
+    <nav class="dashboard-navbar">
+
+        <div class="dashboard-brand">
+
+            📈
+
+            <span>
+                InvestTrack
+            </span>
+
+        </div>
+
+
+        <div class="dashboard-nav-right">
+
+            <a href="{% url 'dashboard' %}">
+                Dashboard
+            </a>
+
+            <a
+                href="{% url 'logout' %}"
+                class="logout-button">
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN -->
+
+    <main class="add-stock-container">
+
+
+        <div class="add-stock-card delete-confirm-card">
+
+            <div class="delete-icon">
+                ⚠️
+            </div>
+
+
+            <h1>
+                Delete Stock?
+            </h1>
+
+
+            <p>
+                Are you sure you want to delete
+                <strong>{{ stock.symbol }}</strong>
+                from your portfolio?
+            </p>
+
+
+            <p>
+                This action cannot be undone.
+            </p>
+
+
+            <form
+                method="POST"
+                action="{% url 'delete_stock' stock.id %}"
+            >
+
+                {% csrf_token %}
+
+
+                <div class="form-actions">
+
+                    <a
+                        href="{% url 'dashboard' %}"
+                        class="cancel-button">
+
+                        Cancel
+
+                    </a>
+
+
+                    <button
+                        type="submit"
+                        class="delete-confirm-button">
+
+                        🗑️ Delete Stock
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

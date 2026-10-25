@@ -1,0 +1,1758 @@
+/* =========================================
+   GLOBAL
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+:root {
+
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+
+    --dark: #0f172a;
+    --dark-light: #172554;
+
+    --text: #172033;
+    --muted: #64748b;
+
+    --white: #ffffff;
+
+    --border: #e2e8f0;
+
+    --green: #16a34a;
+
+    --background: #f5f7fb;
+}
+
+
+body {
+
+    font-family: "Inter", sans-serif;
+
+    background: var(--background);
+
+    color: var(--text);
+
+    min-height: 100vh;
+}
+
+
+/* =========================================
+   NAVBAR
+========================================= */
+
+.navbar {
+
+    height: 76px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 6%;
+
+    background: white;
+
+    border-bottom: 1px solid var(--border);
+}
+
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.brand-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #4f46e5
+    );
+
+    color: white;
+
+    font-size: 24px;
+
+    font-weight: 800;
+}
+
+
+.brand h2 {
+
+    font-size: 19px;
+
+    color: var(--dark);
+}
+
+
+.brand span {
+
+    display: block;
+
+    font-size: 10px;
+
+    color: var(--muted);
+
+    margin-top: 2px;
+}
+
+
+.nav-status {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    font-size: 13px;
+
+    color: var(--muted);
+}
+
+
+.status-dot {
+
+    width: 8px;
+
+    height: 8px;
+
+    background: #22c55e;
+
+    border-radius: 50%;
+
+    box-shadow: 0 0 0 4px #dcfce7;
+}
+
+
+
+/* =========================================
+   MAIN PAGE
+========================================= */
+
+.login-page {
+
+    min-height: calc(100vh - 126px);
+
+    display: grid;
+
+    grid-template-columns: 1.15fr 0.85fr;
+
+    max-width: 1500px;
+
+    margin: auto;
+}
+
+
+/* =========================================
+   HERO SECTION
+========================================= */
+
+.hero-section {
+
+    background:
+
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(37, 99, 235, 0.25),
+            transparent 35%
+        ),
+
+        linear-gradient(
+            145deg,
+            #0f172a,
+            #172554
+        );
+
+    color: white;
+
+    padding: 70px 8%;
+
+    display: flex;
+
+    align-items: center;
+}
+
+
+.hero-content {
+
+    max-width: 650px;
+}
+
+
+.eyebrow {
+
+    display: inline-block;
+
+    padding: 8px 13px;
+
+    border-radius: 30px;
+
+    background: rgba(255,255,255,0.08);
+
+    border: 1px solid rgba(255,255,255,0.12);
+
+    color: #bfdbfe;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 25px;
+}
+
+
+.hero-section h1 {
+
+    font-size: clamp(42px, 5vw, 68px);
+
+    line-height: 1.05;
+
+    letter-spacing: -2px;
+
+    margin-bottom: 25px;
+}
+
+
+.hero-section h1 span {
+    background: linear-gradient(
+        90deg,
+        #60a5fa,
+        #a5b4fc
+    );
+
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-description {
+
+    color: #cbd5e1;
+
+    font-size: 16px;
+
+    line-height: 1.8;
+
+    max-width: 570px;
+
+    margin-bottom: 35px;
+}
+
+
+
+/* =========================================
+   MARKET CARDS
+========================================= */
+
+.market-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 15px;
+
+    margin-bottom: 35px;
+}
+
+
+.market-card {
+
+    padding: 18px;
+
+    border-radius: 14px;
+
+    background: rgba(255,255,255,0.07);
+
+    border: 1px solid rgba(255,255,255,0.09);
+
+    backdrop-filter: blur(10px);
+}
+
+
+.market-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    color: #94a3b8;
+
+    font-size: 12px;
+
+    margin-bottom: 10px;
+}
+
+
+.market-card h3 {
+
+    font-size: 24px;
+
+    margin-bottom: 8px;
+}
+
+
+.up {
+
+    color: #4ade80;
+
+    font-weight: 700;
+}
+
+
+.mini-chart {
+
+    color: #4ade80;
+
+    font-size: 18px;
+
+    letter-spacing: 2px;
+}
+
+
+
+/* =========================================
+   FEATURES
+========================================= */
+
+.features {
+
+    display: grid;
+
+    gap: 16px;
+}
+
+
+.feature {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+}
+
+
+.feature-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: rgba(255,255,255,0.08);
+
+    border-radius: 10px;
+
+    font-size: 18px;
+}
+
+
+.feature h4 {
+
+    font-size: 14px;
+
+    margin-bottom: 4px;
+}
+
+
+.feature p {
+
+    font-size: 12px;
+
+    color: #94a3b8;
+}
+
+
+
+/* =========================================
+   LOGIN SECTION
+========================================= */
+
+.login-section {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 50px;
+}
+
+
+.login-card {
+
+    width: 100%;
+
+    max-width: 460px;
+
+    background: white;
+
+    padding: 42px;
+
+    border-radius: 20px;
+
+    border: 1px solid var(--border);
+
+    box-shadow:
+        0 20px 50px rgba(15,23,42,0.08);
+}
+
+
+
+/* =========================================
+   LOGIN HEADER
+========================================= */
+
+.login-header {
+
+    text-align: center;
+
+    margin-bottom: 32px;
+}
+
+
+.welcome-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin: 0 auto 15px;
+
+    background: #eff6ff;
+
+    border-radius: 14px;
+
+    font-size: 23px;
+}
+
+
+.login-header h2 {
+
+    font-size: 27px;
+
+    color: var(--dark);
+
+    margin-bottom: 7px;
+}
+
+
+.login-header p {
+
+    font-size: 13px;
+
+    color: var(--muted);
+}
+
+
+
+/* =========================================
+   INPUTS
+========================================= */
+
+.input-group {
+
+    margin-bottom: 20px;
+}
+
+
+.input-group label {
+
+    display: block;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    margin-bottom: 8px;
+
+    color: #334155;
+}
+
+
+.password-label {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 8px;
+}
+
+
+.password-label label {
+
+    margin: 0;
+}
+
+
+.password-label a {
+
+    font-size: 11px;
+
+    color: var(--primary);
+
+    text-decoration: none;
+
+    font-weight: 600;
+}
+
+
+.input-wrapper {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+}
+
+
+.input-icon {
+
+    position: absolute;
+
+    left: 14px;
+
+    color: #94a3b8;
+
+    font-size: 15px;
+}
+
+
+.input-wrapper input {
+
+    width: 100%;
+
+    height: 48px;
+
+    border: 1px solid #dbe2ea;
+
+    border-radius: 10px;
+
+    padding: 0 45px;
+
+    outline: none;
+
+    font-size: 13px;
+
+    color: var(--dark);
+
+    transition: 0.2s;
+}
+
+
+.input-wrapper input:focus {
+
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 3px rgba(37,99,235,0.1);
+}
+
+
+.input-wrapper input::placeholder {
+
+    color: #a1aab8;
+}
+
+
+.show-password {
+
+    position: absolute;
+
+    right: 12px;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    color: #64748b;
+}
+
+
+
+/* =========================================
+   REMEMBER
+========================================= */
+
+.remember-row {
+
+    margin-bottom: 22px;
+}
+
+
+.remember {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    font-size: 12px;
+
+    color: var(--muted);
+
+    cursor: pointer;
+}
+
+
+.remember input {
+
+    accent-color: var(--primary);
+}
+
+
+
+/* =========================================
+   LOGIN BUTTON
+========================================= */
+
+.login-button {
+
+    width: 100%;
+
+    height: 50px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #4f46e5
+        );
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    transition: 0.2s;
+
+    box-shadow:
+        0 8px 18px rgba(37,99,235,0.2);
+}
+
+
+.login-button:hover {
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 12px 24px rgba(37,99,235,0.25);
+}
+
+
+.arrow {
+
+    font-size: 20px;
+}
+
+
+
+/* =========================================
+   DIVIDER
+========================================= */
+
+.divider {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 25px 0;
+}
+
+
+.divider span {
+
+    flex: 1;
+
+    height: 1px;
+
+    background: #e2e8f0;
+}
+
+
+.divider p {
+
+    font-size: 10px;
+
+    color: #94a3b8;
+
+    font-weight: 600;
+}
+
+
+
+/* =========================================
+   DEMO BUTTON
+========================================= */
+
+.demo-button {
+
+    width: 100%;
+
+    height: 46px;
+
+    border: 1px solid #dbe2ea;
+
+    background: white;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: #334155;
+
+    transition: 0.2s;
+}
+
+
+.demo-button:hover {
+
+    background: #f8fafc;
+
+    border-color: #cbd5e1;
+}
+
+
+
+/* =========================================
+   REGISTER
+========================================= */
+
+.register-text {
+
+    text-align: center;
+
+    margin-top: 25px;
+
+    font-size: 12px;
+
+    color: var(--muted);
+}
+
+
+.register-text a {
+
+    color: var(--primary);
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    margin-left: 4px;
+}
+
+
+
+/* =========================================
+   SECURITY
+========================================= */
+
+.security-note {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-top: 25px;
+
+    padding: 12px;
+
+    background: #f8fafc;
+
+    border-radius: 9px;
+
+    border: 1px solid #eef2f7;
+}
+
+
+.security-note span {
+
+    font-size: 14px;
+}
+
+
+.security-note p {
+
+    font-size: 10px;
+
+    color: #64748b;
+
+    line-height: 1.5;
+}
+
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer {
+
+    height: 50px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 6%;
+
+    background: white;
+
+    border-top: 1px solid var(--border);
+
+    color: #94a3b8;
+
+    font-size: 10px;
+}
+
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+
+    .login-page {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .hero-section {
+
+        padding: 50px 8%;
+    }
+
+
+    .hero-content {
+
+        max-width: 750px;
+
+        margin: auto;
+    }
+
+
+    .login-section {
+
+        padding: 50px 20px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .navbar {
+
+        padding: 0 20px;
+    }
+
+
+    .nav-status {
+
+        display: none;
+    }
+
+
+    .hero-section {
+
+        padding: 40px 25px;
+    }
+
+
+    .hero-section h1 {
+
+        font-size: 40px;
+    }
+
+
+    .market-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .login-card {
+
+        padding: 28px 22px;
+    }
+
+
+    footer {
+
+        padding: 0 20px;
+    }
+
+}
+
+
+/* =========================================
+   DJANGO MESSAGES
+========================================= */
+
+.messages {
+    margin-bottom: 20px;
+}
+
+.message {
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid transparent;
+}
+
+.message.error {
+    background: #fff1f2;
+    color: #dc2626;
+    border-color: #fecdd3;
+}
+
+.message.success {
+    background: #f0fdf4;
+    color: #16a34a;
+    border-color: #bbf7d0;
+}
+/* =========================================
+   ADD STOCK PAGE
+========================================= */
+
+.add-stock-page {
+    min-height: 100vh;
+    background: #f4f7fb;
+}
+
+
+/* NAVBAR */
+
+.dashboard-navbar {
+    background: #111c44;
+    color: white;
+    padding: 20px 45px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard-brand {
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.dashboard-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.dashboard-links a {
+    color: white;
+    text-decoration: none;
+}
+
+.logout-btn {
+    background: #ef4444;
+    padding: 10px 18px;
+    border-radius: 8px;
+}
+
+
+/* MAIN CONTAINER */
+
+.add-stock-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 0 25px;
+}
+
+
+/* HEADER */
+
+.add-stock-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.add-stock-header h1 {
+    font-size: 38px;
+    color: #111c44;
+    margin-bottom: 10px;
+}
+
+.add-stock-header p {
+    color: #64748b;
+    font-size: 17px;
+}
+
+
+/* FORM CARD */
+
+.add-stock-card {
+    background: white;
+    padding: 40px;
+    border-radius: 18px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.08);
+}
+
+
+/* FORM */
+
+.stock-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #111c44;
+    margin-bottom: 8px;
+}
+
+.form-group input {
+    padding: 13px 15px;
+
+    border: 1px solid #d5dce8;
+    border-radius: 8px;
+
+    font-size: 16px;
+
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37,99,235,0.12);
+}
+
+
+/* HELP TEXT */
+
+.help-text {
+    color: #64748b;
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+
+/* CALCULATION BOX */
+
+.calculation-box {
+    grid-column: 1 / -1;
+
+    background: #f4f7fb;
+
+    padding: 25px;
+
+    border-radius: 12px;
+
+    margin-top: 5px;
+}
+
+.calculation-box h3 {
+    margin-top: 0;
+    color: #111c44;
+}
+
+.calculation-row {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.calculation-row:last-child {
+    border-bottom: none;
+}
+
+.calculation-value {
+    font-weight: 700;
+    color: #111c44;
+}
+
+
+/* BUTTONS */
+
+.form-actions {
+    grid-column: 1 / -1;
+
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+
+    margin-top: 10px;
+}
+
+.cancel-btn {
+    padding: 13px 25px;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 8px;
+
+    color: #475569;
+
+    text-decoration: none;
+
+    background: white;
+}
+
+.primary-action {
+    padding: 13px 25px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: linear-gradient(
+        90deg,
+        #2563eb,
+        #4f46e5
+    );
+
+    color: white;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.primary-action:hover {
+    opacity: 0.9;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 700px) {
+
+    .stock-form {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full-width {
+        grid-column: auto;
+    }
+
+    .calculation-box {
+        grid-column: auto;
+    }
+
+    .form-actions {
+        grid-column: auto;
+        flex-direction: column;
+    }
+
+    .add-stock-card {
+        padding: 25px;
+    }
+
+}
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+.dashboard-page {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #111827;
+}
+
+
+/* ================= NAVBAR ================= */
+
+.dashboard-navbar {
+    background: #111c44;
+    color: white;
+    padding: 20px 45px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.dashboard-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.dashboard-nav-right a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.logout-button {
+    background: #ef4444;
+    color: white !important;
+
+    padding: 11px 20px;
+    border-radius: 8px;
+}
+
+
+/* ================= MAIN ================= */
+
+.dashboard-container {
+    padding: 45px;
+    max-width: 1500px;
+    margin: auto;
+}
+
+
+/* ================= WELCOME ================= */
+
+.dashboard-welcome {
+    margin-bottom: 35px;
+}
+
+.dashboard-welcome h1 {
+    margin: 0;
+
+    font-size: 32px;
+    color: #111c44;
+}
+
+.dashboard-welcome p {
+    margin-top: 5px;
+
+    font-size: 17px;
+    color: #64748b;
+}
+
+
+/* ================= SUMMARY CARDS ================= */
+
+.dashboard-cards {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 22px;
+
+    margin-bottom: 40px;
+}
+
+.dashboard-card {
+    background: white;
+
+    padding: 28px;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-card h3 {
+    margin: 0 0 15px;
+
+    color: #64748b;
+
+    font-size: 18px;
+}
+
+.dashboard-value {
+    font-size: 29px;
+    font-weight: bold;
+
+    color: #111c44;
+}
+
+.stock-count {
+    color: #2563eb;
+}
+
+
+/* ================= PROFIT / LOSS ================= */
+
+.profit-positive {
+    color: #16a34a !important;
+    font-weight: bold;
+}
+
+.profit-negative {
+    color: #dc2626 !important;
+    font-weight: bold;
+}
+
+
+/* ================= SECTIONS ================= */
+
+.dashboard-section {
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 16px;
+
+    margin-bottom: 35px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+.section-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+.section-header h2 {
+    margin: 0;
+
+    font-size: 25px;
+    color: #111827;
+}
+
+.section-header p {
+    margin-top: 8px;
+
+    color: #64748b;
+}
+
+
+/* ================= ADD STOCK BUTTON ================= */
+
+.primary-action {
+    display: inline-block;
+
+    background: #2563eb;
+
+    color: white;
+
+    text-decoration: none;
+
+    padding: 13px 22px;
+
+    border-radius: 9px;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+.primary-action:hover {
+    background: #1d4ed8;
+}
+
+
+/* ================= PORTFOLIO SUMMARY ================= */
+
+.portfolio-summary {
+    font-size: 17px;
+    color: #475569;
+}
+
+
+/* ================= STOCK TABLE ================= */
+
+.stock-table-container {
+    width: 100%;
+
+    overflow-x: auto;
+
+    margin-top: 25px;
+}
+
+.stock-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    background: white;
+}
+
+.stock-table th {
+    background: #f1f5f9;
+
+    color: #475569;
+
+    text-align: left;
+
+    padding: 15px;
+
+    font-size: 14px;
+
+    white-space: nowrap;
+}
+
+.stock-table td {
+    padding: 16px 15px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    color: #334155;
+
+    white-space: nowrap;
+}
+
+.stock-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.stock-table td strong {
+    color: #111c44;
+}
+
+
+/* ================= EMPTY PORTFOLIO ================= */
+
+.empty-portfolio {
+    text-align: center;
+
+    padding: 45px 20px;
+
+    color: #64748b;
+}
+
+.empty-icon {
+    font-size: 45px;
+
+    margin-bottom: 10px;
+}
+
+.empty-portfolio h3 {
+    margin: 10px 0;
+
+    color: #111827;
+
+    font-size: 22px;
+}
+
+.empty-portfolio p {
+    margin-bottom: 25px;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1000px) {
+
+    .dashboard-cards {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .dashboard-navbar {
+        padding: 18px 20px;
+    }
+
+    .dashboard-container {
+        padding: 25px 15px;
+    }
+
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-nav-right {
+        gap: 10px;
+    }
+
+    .dashboard-brand {
+        font-size: 22px;
+    }
+
+    .section-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+}
+
+
+
+/* =========================
+   STOCK ACTIONS
+========================= */
+
+.stock-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.edit-button,
+.delete-button {
+    display: inline-block;
+
+    padding: 8px 12px;
+
+    border-radius: 7px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+
+/* EDIT */
+
+.edit-button {
+    background: #e0ecff;
+    color: #2563eb;
+}
+
+.edit-button:hover {
+    background: #c7dcff;
+}
+
+
+/* DELETE */
+
+.delete-button {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.delete-button:hover {
+    background: #fecaca;
+}
+
+
+
+/* =========================
+   DELETE CONFIRMATION
+========================= */
+
+.delete-confirm-card {
+    text-align: center;
+}
+
+.delete-icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.delete-confirm-card h1 {
+    color: #111c44;
+}
+
+.delete-confirm-card p {
+    color: #64748b;
+    font-size: 16px;
+}
+
+.delete-confirm-button {
+    background: #dc2626;
+    color: white;
+
+    border: none;
+
+    padding: 12px 20px;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.delete-confirm-button:hover {
+    background: #b91c1c;
+}
+
+
+
+.dashboard-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.refresh-button {
+    display: inline-block;
+    text-decoration: none;
+    background: #16a34a;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.refresh-button:hover {
+    background: #15803d;
+}
+
+
+/* =========================
+   DASHBOARD ACTIONS
+========================= */
+
+.dashboard-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+.refresh-button {
+    display: inline-block;
+    text-decoration: none;
+    background: #16a34a;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+
+.refresh-button:hover {
+    background: #15803d;
+    transform: translateY(-1px);
+}
+
+
+/* =========================
+   DASHBOARD ACTIONS
+========================= */
+
+.dashboard-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
+/* =========================
+   REFRESH BUTTON
+========================= */
+
+.refresh-button {
+    display: inline-block;
+    text-decoration: none;
+    background: #16a34a;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+
+.refresh-button:hover {
+    background: #15803d;
+    transform: translateY(-1px);
+}
